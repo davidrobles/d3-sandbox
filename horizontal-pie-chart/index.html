@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-    <meta charset="utf-8">
-    <title></title>
+    <title>Horizontal Bar Chart</title>
     <style>
         body {
-            font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
+            font-family: Helvetica, Arial;
         }
 
-        div.chart {
+        .chart {
             background-color: tan;
             width: 800px;
             padding: 10px;
@@ -16,7 +15,7 @@
             color: white;
         }
 
-        div.chart div {
+        .chart div {
             background-color: #056af0;
             margin-bottom: 20px;
             padding: 8px;
@@ -27,36 +26,45 @@
 <body>
 
     <div class="chart"></div>
+    <button id="randomize-button">Randomize</button>
 
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script>
-        var ages = d3.range(5).map(function() { return 10 +  (Math.random() * 90) });
+        (function() {
 
-        var x = d3.scale.linear().domain([0, d3.max(ages)]).range([0, 600]);
+            var createBarChart = function() {
+                var chart = document.getElementsByClassName("chart");
+                chart = chart[0];
+                while (chart.firstChild) {
+                    chart.removeChild(chart.firstChild);
+                }
+                var ages = d3.range(10).map(function() { return 10 +  (Math.random() * 90) });
+                var x = d3.scale.linear().domain([0, d3.max(ages)]).range([0, 600]);
+                d3.select(".chart")
+                    .selectAll("div")
+                    .data(ages)
+                    .enter()
+                    .append("div")
+                    .style("width", "0px")
+                    .transition()
+                    .duration(2000)
+                    .style("width", function(d) {
+                        return x(d) + "px";
+                    })
+                    .transition()
+                    .duration(1000)
+                    .text(function(d, i) {
+                        return Math.floor(d);
+                    });
+            };
 
-        var restart = function() {
+            var randomizeButtonEl = document.getElementById("randomize-button");
+            randomizeButtonEl.addEventListener("click", function() {
+                createBarChart();
+            })
 
-            // Create empty divs
-            d3.select(".chart")
-                .selectAll("div")
-                .data(ages)
-                .enter()
-                .append("div")
-                .style("width", "0px")
-                .transition()
-                .duration(2000)
-                .style("width", function(d) {
-                    return x(d) + "px";
-                })
-                .transition()
-                .duration(1000)
-                .text(function(d, i) {
-                    return Math.floor(d);
-                });
-
-        };
-
-        restart();
+            createBarChart();
+        })();
     </script>
 
 </body>
