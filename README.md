@@ -1,3 +1,3 @@
 d3 visualization stuff
 
--  [Horizontal Bar Chart](horizontal-pie-chart/index.html)
+-  [Horizontal Bar Chart](http://www.davidrobles.net/horizontal-pie-chart/index.html)
