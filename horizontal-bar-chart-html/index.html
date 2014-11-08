@@ -1,70 +1,66 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<head>
-    <title>Horizontal Bar Chart</title>
-    <style>
-        body {
-            font-family: Helvetica, Arial;
-        }
 
-        .chart {
-            background-color: tan;
-            width: 800px;
-            padding: 10px;
-            text-align: right;
-            color: white;
-        }
+<style>
+    body {
+        font-family: Helvetica, Arial;
+    }
 
-        .chart div {
-            background-color: #056af0;
-            margin-bottom: 20px;
-            padding: 8px;
-            height: 20px;
-        }
-    </style>
-</head>
-<body>
+    .chart {
+        background-color: tan;
+        width: 800px;
+        padding: 10px;
+        text-align: right;
+        color: white;
+    }
 
-    <div class="chart"></div>
-    <button id="randomize-button">Randomize</button>
+    .chart div {
+        background-color: #056af0;
+        margin-bottom: 20px;
+        padding: 8px;
+        height: 20px;
+    }
+</style>
 
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script>
-        (function() {
+<div class="chart"></div>
+<button id="randomize-button">Randomize</button>
 
-            var createBarChart = function() {
-                var chart = document.getElementsByClassName("chart");
-                chart = chart[0];
-                while (chart.firstChild) {
-                    chart.removeChild(chart.firstChild);
-                }
-                var ages = d3.range(10).map(function() { return 10 +  (Math.random() * 90) });
-                var x = d3.scale.linear().domain([0, d3.max(ages)]).range([0, 600]);
-                d3.select(".chart")
-                    .selectAll("div")
-                    .data(ages)
-                    .enter()
-                    .append("div")
-                    .style("width", "0px")
-                    .transition()
-                    .duration(2000)
-                    .style("width", function(d) {
-                        return x(d) + "px";
-                    })
-                    .transition()
-                    .duration(1000)
-                    .text(function(d, i) {
-                        return Math.floor(d);
-                    });
-            };
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
-            var randomizeButtonEl = document.getElementById("randomize-button");
-            randomizeButtonEl.addEventListener("click", function() {
-                createBarChart();
-            })
+<script>
+    (function() {
 
+        var createBarChart = function() {
+            var chart = document.getElementsByClassName("chart");
+            chart = chart[0];
+            while (chart.firstChild) {
+                chart.removeChild(chart.firstChild);
+            }
+            var ages = d3.range(10).map(function() { return 10 +  (Math.random() * 90) });
+            var x = d3.scale.linear().domain([0, d3.max(ages)]).range([0, 600]);
+            d3.select(".chart")
+                .selectAll("div")
+                .data(ages)
+                .enter()
+                .append("div")
+                .style("width", "0px")
+                .transition()
+                .duration(2000)
+                .style("width", function(d) {
+                    return x(d) + "px";
+                })
+                .transition()
+                .duration(1000)
+                .text(function(d, i) {
+                    return Math.floor(d);
+                });
+        };
+
+        var randomizeButtonEl = document.getElementById("randomize-button");
+        randomizeButtonEl.addEventListener("click", function() {
             createBarChart();
-        })();
-    </script>
+        })
 
-</body>
+        createBarChart();
+    })();
+</script>
