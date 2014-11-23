@@ -21,7 +21,18 @@
 <script src="../d3.js"></script>
 <script>
 
-    var margin = { top: 50, right: 50, bottom: 50, left: 50},
+    var data = [
+        { letter: "A", value: 78 },
+        { letter: "B", value: 5 },
+        { letter: "C", value: 99 },
+        { letter: "D", value: 55 },
+        { letter: "E", value: 13 },
+        { letter: "F", value: 44 },
+        { letter: "G", value: 93 },
+        { letter: "H", value: 3 }
+    ];
+
+    var margin = { top: 50, right: 50, bottom: 50, left: 50 },
             width = 600 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
 
@@ -33,23 +44,12 @@
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Scales
-    var x = d3.scale.ordinal().domain(["A", "B", "C", "D", "E", "F", "G", "H"]).rangeRoundBands([0, width], .2),
+    var x = d3.scale.ordinal().domain(data.map(function(d) { return d.letter; })).rangeRoundBands([0, width], .2),
         y = d3.scale.linear().domain([0, 100]).range([height, 0]);
 
     // Axes
     var xAxis = d3.svg.axis().scale(x).orient("bottom"),
         yAxis = d3.svg.axis().scale(y).orient("left");
-
-    var data = [
-        { letter: "A", value: 78 },
-        { letter: "B", value: 5 },
-        { letter: "C", value: 99 },
-        { letter: "D", value: 55 },
-        { letter: "E", value: 13 },
-        { letter: "F", value: 44 },
-        { letter: "G", value: 93 },
-        { letter: "H", value: 3 }
-    ];
 
     // Add bars
     svg.selectAll("rect")
