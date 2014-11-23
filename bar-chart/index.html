@@ -32,11 +32,15 @@
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var xScale = d3.scale.ordinal().domain(["A", "B", "C", "D", "E", "F", "G", "H"]).rangeRoundBands([0, width], .2);
-    var yScale = d3.scale.linear().domain([0, 100]).range([height, 0]);
-    var xAxis = d3.svg.axis().scale(xScale).orient("bottom");
-    var yAxis = d3.svg.axis().scale(yScale).orient("left");
-    var numbers = [
+    // Scales
+    var xScale = d3.scale.ordinal().domain(["A", "B", "C", "D", "E", "F", "G", "H"]).rangeRoundBands([0, width], .2),
+        yScale = d3.scale.linear().domain([0, 100]).range([height, 0]);
+
+    // Axes
+    var xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
+        yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+    var data = [
         { letter: "A", value: 78 },
         { letter: "B", value: 5 },
         { letter: "C", value: 99 },
@@ -47,8 +51,9 @@
         { letter: "H", value: 3 }
     ];
 
+    // Add bars
     svg.selectAll("rect")
-            .data(numbers)
+            .data(data)
             .enter()
             .append("rect")
             .attr("class", "bar")
