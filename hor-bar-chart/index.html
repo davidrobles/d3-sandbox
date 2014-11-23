@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    * {
+        font: 12px sans-serif;
+    }
+
+    .bar {
+        fill: steelblue;
+    }
+
+</style>
+<body>
+<script src="../d3.js"></script>
+<script>
+
+    var margin = { top: 50, right: 50, bottom: 50, left: 50},
+        width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height +  margin.top + margin.bottom)
+            .style("background-color", "wheat")
+            .append("g")
+            .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+    var data = [
+        { name: "Mima", age: 76 },
+        { name: "Cuco", age: 58},
+        { name: "Araceli", age: 51},
+        { name: "David", age: 31 },
+        { name: "Juan Pablo", age: 29 },
+        { name: "Natalia", age: 29 }
+    ];
+
+    var x = d3.scale.linear().domain([0, 76]).range([0, width]),
+        y = d3.scale.ordinal().domain(data.map(function(d) { return d.age; })).rangeRoundBands([0, height], .4);
+
+    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
+        yAxis = d3.svg.axis().scale(y).orient("left");
+
+    // Add bars
+    svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", 0)
+            .attr("y", function(d) {
+                return y(d.age);
+            })
+            .attr("width", function(d) {
+                return x(d.age);
+            })
+            .attr("height", function(d) {
+                return y.rangeBand();
+            });
+
+    svg.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("x", function(d) {
+                return x(d.age) + 6;
+            })
+            .attr("y", function(d) {
+                return y(d.age) + (y.rangeBand() / 1.7);
+            })
+            .text(function(d) { return d.age; });
+
+    svg.append("g")
+            .attr("transform", "translate(0, " + height + ")")
+            .call(xAxis);
+
+    svg.append("g")
+            .call(yAxis);
+
+</script>
+</body>
