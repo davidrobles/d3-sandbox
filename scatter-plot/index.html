@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+svg {
+    font-family: Helvetica;
+    font-size: 12px;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+    stroke-width: ;
+}
+</style>
+<body>
+<script src="../d3.js" charset="utf-8"></script>
+<script>
+
+var margin = { top: 50, right: 50, bottom: 50, left: 50 },
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("style", "background-color: #cecece")
+        .append("g")
+            .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+svg.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill", "red");
+
+var numbers = d3.range(200);
+
+var xScale = d3.scale.linear().domain([1970, 2014]).range([0, width]),
+    yScale = d3.scale.linear().domain([0, 85]).range([height, 0]);
+
+var xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(5),
+    yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10);
+
+svg.selectAll("circle")
+        .data(numbers)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+            return xScale(Math.floor(Math.random() * 44) + 1970);
+        })
+        .attr("cy", function(d) {
+            return yScale(Math.floor(Math.random() * 85));
+        })
+        .attr("r", 3)
+        .attr("fill", "yellow")
+        .attr("stroke", "none");
+
+svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0, " + height + ")")
+        .call(xAxis);
+
+
+svg.append("g")
+        .attr("class", "axis")
+        .call(yAxis);
+
+</script>
+</body>
