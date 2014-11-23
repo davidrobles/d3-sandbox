@@ -22,7 +22,7 @@
 <script src="../d3.js"></script>
 <script>
 
-    var margin = { top: 50, right: 50, bottom: 50, left: 85},
+    var margin = { top: 30, right: 50, bottom: 50, left: 85},
         width = 600 - margin.left - margin.right,
         height = 400 - margin.top - margin.bottom;
 
@@ -35,18 +35,18 @@
             .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
     var data = [
-        { name: "Mima", age: 76 },
-        { name: "Cuco", age: 58},
-        { name: "Araceli", age: 51},
-        { name: "David", age: 31 },
-        { name: "Juan Pablo", age: 29 },
-        { name: "Natalia", age: 29 }
+        { name: "Steelers", value: 6 },
+        { name: "Cowboys", value: 5 },
+        { name: "49ers", value: 5 },
+        { name: "Packers", value: 4 },
+        { name: "Giants", value: 4 },
+        { name: "Patriots", value: 3 }
     ];
 
-    var x = d3.scale.linear().domain([0, 76]).range([0, width]),
+    var x = d3.scale.linear().domain([0, d3.max(data.map(function(d) { return d.value; }))]).range([0, width]),
         y = d3.scale.ordinal().domain(data.map(function(d) { return d.name; })).rangeRoundBands([0, height], .4);
 
-    var xAxis = d3.svg.axis().scale(x).orient("bottom"),
+    var xAxis = d3.svg.axis().scale(x).orient("bottom").ticks(6),
         yAxis = d3.svg.axis().scale(y).orient("left");
 
     // Add bars
@@ -60,7 +60,7 @@
                 return y(d.name);
             })
             .attr("width", function(d) {
-                return x(d.age);
+                return x(d.value);
             })
             .attr("height", function(d) {
                 return y.rangeBand();
@@ -71,12 +71,12 @@
             .enter()
             .append("text")
             .attr("x", function(d) {
-                return x(d.age) + 6;
+                return x(d.value) + 6;
             })
             .attr("y", function(d) {
                 return y(d.name) + (y.rangeBand() / 1.7);
             })
-            .text(function(d) { return d.age; });
+            .text(function(d) { return d.value; });
 
     svg.append("g")
             .attr("class", "axis")
