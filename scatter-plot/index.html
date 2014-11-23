@@ -25,7 +25,7 @@ var svg = d3.select("body")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-        .attr("style", "background-color: #cecece")
+//        .attr("style", "background-color: #cecece")
         .append("g")
             .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
@@ -34,7 +34,7 @@ svg.append("rect")
     .attr("y", 0)
     .attr("width", width)
     .attr("height", height)
-    .attr("fill", "red");
+    .attr("fill", "#F3EFDA");
 
 var numbers = d3.range(200);
 
@@ -44,18 +44,19 @@ var xScale = d3.scale.linear().domain([1970, 2014]).range([0, width]),
 var xAxis = d3.svg.axis().scale(xScale).orient("bottom").ticks(5),
     yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(10);
 
-svg.selectAll("circle")
+svg.selectAll("rect")
         .data(numbers)
         .enter()
-        .append("circle")
-        .attr("cx", function(d) {
-            return xScale(Math.floor(Math.random() * 44) + 1970);
+        .append("rect")
+        .attr("x", function() {
+            return xScale(Math.floor(Math.random() * 43) + 1971);
         })
-        .attr("cy", function(d) {
-            return yScale(Math.floor(Math.random() * 85));
+        .attr("y", function() {
+            return yScale(Math.floor(Math.random() * 84) + 1);
         })
-        .attr("r", 3)
-        .attr("fill", "yellow")
+        .attr("width", 8)
+        .attr("height", 8)
+        .attr("fill", "#3873BA")
         .attr("stroke", "none");
 
 svg.append("g")
