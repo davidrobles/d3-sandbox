@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-svg {
-    font-family: Helvetica;
-    font-size: 12px;
+.axis {
+    font: 10px sans-serif;
 }
 .axis path,
 .axis line {
     fill: none;
     stroke: black;
     shape-rendering: crispEdges;
-    stroke-width: ;
+    stroke-width: 1;
 }
 </style>
 <body>
@@ -25,7 +24,6 @@ var svg = d3.select("body")
     .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
-//        .attr("style", "background-color: #cecece")
         .append("g")
             .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
 
